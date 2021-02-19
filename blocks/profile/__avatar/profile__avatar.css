@@ -1,0 +1,16 @@
+@media screen and (max-width: 918px) {
+  .profile__avatar {
+    -ms-grid-column-align: end;
+        justify-self: end;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .profile__avatar {
+    -ms-grid-column-align: center;
+        justify-self: center;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
+    grid-column: 1 / 4;
+  }
+}

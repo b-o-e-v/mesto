@@ -1,0 +1,17 @@
+.profile__about {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  padding-left: 30px;
+  padding-right: 18px;
+}
+
+@media screen and (max-width: 619px) {
+  .profile__about {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2 / 3;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

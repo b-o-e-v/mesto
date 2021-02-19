@@ -27,11 +27,11 @@ function formSubmitHandler (evt) {
     popup.classList.remove('popup_opened');
 }
 
-// ВЫЗОВ ФУНКЦИЙ
+// СОБЫТИЯ
 profileEdit.addEventListener('click', openPopup);
 popupClose.addEventListener('click', closePopup);
 formElement.addEventListener('submit', formSubmitHandler); 
 
-// ПРОЧЕЕ
+// прочее
 nameInput.value = profileName.textContent;
 jobInput.value = profileDescription.textContent;

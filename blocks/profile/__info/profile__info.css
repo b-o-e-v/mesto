@@ -1,0 +1,26 @@
+.profile__info {
+  -ms-grid-row-align: center;
+      align-self: center;
+  color: #FFFFFF;
+  font-family: 'Inter', Helvetica, sans-serif;
+  font-style: normal;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 120px auto 1fr;
+      grid-template-columns: 120px auto 1fr;
+}
+
+@media screen and (max-width: 918px) {
+  .profile__info {
+    -ms-grid-columns: 1fr 342px 1fr;
+        grid-template-columns: 1fr 342px 1fr;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .profile__info {
+    -ms-grid-columns: 1fr 189px 1fr;
+        grid-template-columns: 1fr 189px 1fr;
+    gap: 26px 0;
+  }
+}

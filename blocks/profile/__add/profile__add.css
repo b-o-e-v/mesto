@@ -1,0 +1,32 @@
+.profile__add {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 2px solid #FFFFFF;
+  background-image: url(../../../images/add.svg);
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  background-position: center;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.profile__add:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 918px) {
+  .profile__add {
+    width: 282px;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
+}

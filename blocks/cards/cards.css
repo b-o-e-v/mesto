@@ -1,0 +1,27 @@
+.cards {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 282px 282px 282px;
+      grid-template-columns: repeat(3, 282px);
+  gap: 20px 17px;
+}
+
+@media screen and (max-width: 918px) {
+  .cards {
+    -ms-grid-columns: 282px 282px;
+        grid-template-columns: repeat(2, 282px);
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .cards {
+    -ms-grid-columns: 282px;
+        grid-template-columns: 282px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
