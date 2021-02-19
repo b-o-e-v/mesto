@@ -2,6 +2,7 @@
 @import url(../fonts/Inter/inter.css);
 
 /* БЛОКИ */
+@import url(../blocks/../vendor/normalize.css);
 @import url(../blocks/root/root.css);
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
