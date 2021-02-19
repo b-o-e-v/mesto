@@ -24,6 +24,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
+    popup.classList.remove('popup_opened');
 }
 
 // ВЫЗОВ ФУНКЦИЙ
