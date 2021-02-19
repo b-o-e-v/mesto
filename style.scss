@@ -185,23 +185,24 @@
     border-radius: 10px;
     padding: 34px 36px 37px;
     position: relative;
-    &::after {
-        display: block;
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        content: "";
-        width: 40px;
-        height: 40px;
-        background-image: url(./images/close.svg);
-        background-repeat: no-repeat;
-        background-size: 40px 40px;
-        background-position: center;
-        transform: rotate(45deg);
-        cursor: pointer;
-        transition: opacity 0.5s;
-    }
-    &:hover::after {
+}
+
+.popup__close {
+    display: block;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    content: "";
+    width: 40px;
+    height: 40px;
+    background-image: url(./images/close.svg);
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: center;
+    transform: rotate(45deg);
+    cursor: pointer;
+    transition: opacity 0.5s;
+    &:hover {
         opacity: 0.6;
     }
 }
@@ -250,6 +251,7 @@
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
+    outline: none;
     cursor: pointer;
     transition: opacity 0.5s;
     &:hover {
@@ -378,13 +380,14 @@
         width: 282px;
         height: 322px;
         padding: 25px 22px;
-        &::after {
-            top: -40px;
-            right: 0;
-            width: 26px;
-            height: 26px;
-            background-size: 26px 26px;
-        }
+    }
+
+    .popup__close {
+        top: -40px;
+        right: 0;
+        width: 26px;
+        height: 26px;
+        background-size: 26px 26px;
     }
 
     .popup__title {
