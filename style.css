@@ -76,6 +76,12 @@
   background-position: center;
   outline: none;
   cursor: pointer;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.profile__edit:hover {
+  opacity: 0.6;
 }
 
 .profile__description {
@@ -100,6 +106,12 @@
   background-position: center;
   outline: none;
   cursor: pointer;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.profile__add:hover {
+  opacity: 0.6;
 }
 
 .cards {
@@ -167,6 +179,15 @@
   cursor: pointer;
 }
 
+.card__like:hover {
+  opacity: 0.5;
+}
+
+.card__like:active {
+  opacity: 1;
+  background-image: url(./images/like-active.svg);
+}
+
 .popup {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -219,6 +240,12 @@
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
   cursor: pointer;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.popup__container:hover::after {
+  opacity: 0.6;
 }
 
 .popup__title {
@@ -291,6 +318,12 @@
   line-height: 22px;
   color: #FFFFFF;
   cursor: pointer;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.popup__save:hover {
+  opacity: 0.8;
 }
 
 .footer {

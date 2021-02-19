@@ -67,6 +67,10 @@
     background-position: center;
     outline: none;
     cursor: pointer;
+    transition: opacity 0.5s;
+    &:hover {
+        opacity: 0.6;
+    }
 }
 
 .profile__description {
@@ -89,6 +93,10 @@
     background-position: center;
     outline: none;
     cursor: pointer;
+    transition: opacity 0.5s;
+    &:hover {
+        opacity: 0.6;
+    }
 }
 
 .cards {
@@ -141,6 +149,13 @@
     background-size: 100%;
     outline: none;
     cursor: pointer;
+    &:hover {
+        opacity: 0.5;
+    }
+    &:active {
+        opacity: 1;
+        background-image: url(./images/like-active.svg);
+    }
 }
 
 .popup {
@@ -152,7 +167,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba($color: #000000, $alpha: 0.5);
     display: none;
     justify-content: center;
     align-items: center;
@@ -184,6 +199,10 @@
         background-position: center;
         transform: rotate(45deg);
         cursor: pointer;
+        transition: opacity 0.5s;
+    }
+    &:hover::after {
+        opacity: 0.6;
     }
 }
 
@@ -232,6 +251,10 @@
     line-height: 22px;
     color: #FFFFFF;
     cursor: pointer;
+    transition: opacity 0.5s;
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 .footer {
