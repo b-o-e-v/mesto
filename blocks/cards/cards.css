@@ -1,4 +1,7 @@
 .cards {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 282px 282px 282px;
@@ -20,8 +23,5 @@
   .cards {
     -ms-grid-columns: 282px;
         grid-template-columns: 282px;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
   }
 }

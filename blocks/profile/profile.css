@@ -8,8 +8,6 @@
 
 @media screen and (max-width: 918px) {
   .profile {
-    display: -ms-grid;
-    display: grid;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     gap: 36px 0;
