@@ -3,5 +3,5 @@
           box-sizing: border-box;
   max-width: 880px;
   margin: 0 auto;
-  border-bottom: 1px solid #54545470;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
