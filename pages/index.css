@@ -27,15 +27,21 @@
 @import url(../blocks/card/__title/card__title.css);
 @import url(../blocks/card/__description/card__description.css);
 @import url(../blocks/card/__like/card__like.css);
+@import url(../blocks/card/__delete/card__delete.css);
   /* popup */
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__close/popup__close.css);
+@import url(../blocks/popup/__img/popup__img.css);
   /* footer */
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
 /* МОДИФИКАТОРЫ */
   /* header */
 @import url(../blocks/popup/_opened/popup_opened.css);
+  /* card */
+@import url(../blocks/card/__like/_active/card__like_active.css);
+  /* popup */
+@import url(../blocks/popup/__container/_type/popup__container_type_open-photo.css)
