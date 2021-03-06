@@ -26,63 +26,40 @@
                 <button class="profile__add" type="button"></button>
             </section>
             <section class="gallery">
-                <ul class="cards">
-                    <li class="card">
-                        <img src="./images/Russia.jpg" alt="Россия" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">Российская Федерация</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <img src="./images/Norway.jpg" alt="Норвегия" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">Норвегия</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <img src="./images/USA.jpg" alt="США" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">США</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <img src="./images/Italy.jpg" alt="Италия" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">Италия</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <img src="./images/Switzerland.jpg" alt="Швейцария" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">Швейцария</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="card">
-                        <img src="./images/Japan.jpg" alt="Япония" class="card__img">
-                        <div class="card__description">
-                            <h2 class="card__title">Япония</h2>
-                            <button class="card__like" type="button"></button>
-                        </div>
-                    </li>
-                </ul>
+                <ul class="cards"></ul>
             </section>
-            <section class="popup">
+            <section class="popup popup_type_edit">
                 <div class="popup__container">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form action="index.html" class="popup__form" name="edit-profile">
+                    <form action="index.html" class="popup__form popup__form_type_edit" name="edit-profile">
                         <input type="text" placeholder="Имя" class="popup__input popup__input_string_name" name="name">
                         <input type="text" placeholder="О себе" class="popup__input popup__input_string_job" name="job">
-                        <button type="submit" value="Сохранить" class="popup__save">Сохранить</button>
+                        <button type="submit" value="Сохранить" class="popup__save popup__save_type_edit">Сохранить</button>
+                    </form>
+                    <button type="button" class="popup__close"></button>
+                </div>
+            </section>
+            <section class="popup popup_type_add">
+                <div class="popup__container">
+                    <h2 class="popup__title">Новое место</h2>
+                    <form action="index.html" class="popup__form popup__form_type_add" name="add-profile">
+                        <input type="text" placeholder="Название" class="popup__input popup__input_string_card-name" name="card-name" required>
+                        <input type="text" placeholder="Ссылка на картинку" class="popup__input popup__input_string_card-link" name="card-link" required>
+                        <button type="submit" value="Сохранить" class="popup__save popup__save_type_add">Сохранить</button>
                     </form>
                     <button type="button" class="popup__close"></button>
                 </div>
             </section>
         </main>
+        <template id="card">
+            <li class="card">
+                <img class="card__img">
+                <div class="card__description">
+                    <h2 class="card__title"></h2>
+                    <button class="card__like" type="button"></button>
+                </div>
+            </li>
+        </template> 
         <footer class="footer">
             <p class="footer__copyright">© 2020 Mesto Russia</p>
         </footer>
