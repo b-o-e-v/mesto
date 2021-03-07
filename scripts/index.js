@@ -27,26 +27,26 @@ const initialCards = [
 
 // ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ
     //profile
-let profileName = document.querySelector('.profile__name');
-let profileDescription = document.querySelector('.profile__description');
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
     //cards
 const cards = document.querySelector('.cards');
     //popup
-let popup = document.querySelectorAll('.popup');
-let popupEdit = document.querySelector('.popup_type_edit');
-let popupAdd = document.querySelector('.popup_type_add');
-let profileEdit = document.querySelector('.profile__edit');
-let profileAdd = document.querySelector('.profile__add');
-let popupClose = document.querySelectorAll('.popup__close');
-let popupPhoto = document.querySelector('.popup_type_open-photo');
-let popupImg = document.querySelector('.popup__img');
+const popups = document.querySelectorAll('.popup');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
+const profileEdit = document.querySelector('.profile__edit');
+const profileAdd = document.querySelector('.profile__add');
+const popupsClose = document.querySelectorAll('.popup__close');
+const popupPhoto = document.querySelector('.popup_type_open-photo');
+const popupImg = document.querySelector('.popup__img');
     //form
-let formEdit = document.querySelector('.popup__form_type_edit');
-let formAdd = document.querySelector('.popup__form_type_add');
-let nameInput = document.querySelector('.popup__input_string_name');
-let jobInput = document.querySelector('.popup__input_string_job');
-let cardName = document.querySelector('.popup__input_string_card-name');
-let cardLink = document.querySelector('.popup__input_string_card-link');
+const formEdit = document.querySelector('.popup__form_type_edit');
+const formAdd = document.querySelector('.popup__form_type_add');
+const nameInput = document.querySelector('.popup__input_string_name');
+const jobInput = document.querySelector('.popup__input_string_job');
+const cardName = document.querySelector('.popup__input_string_card-name');
+const cardLink = document.querySelector('.popup__input_string_card-link');
 
 // ФУНКЦИИ
 function addOpened(popup) {
@@ -64,8 +64,8 @@ function openPopup(evt) {
 }
 
 function closePopup() {
-    popup.forEach(function(pop) {
-        pop.classList.remove('popup_opened');
+    popups.forEach(function(popup) {
+        popup.classList.remove('popup_opened');
     })
 }
 
@@ -77,8 +77,8 @@ function formSubmitHandler (evt) {
 }
 
 function addCard(item) {
-    let cardTemplate = document.querySelector('#card').content;
-    let cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardTemplate = document.querySelector('#card').content;
+    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     cardElement.querySelector('.card__img').src = item.link;
     cardElement.querySelector('.card__img').alt = item.name;
     cardElement.querySelector('.card__title').textContent = item.name;
@@ -93,9 +93,9 @@ function addCard(item) {
     const deleteCard = cardElement.querySelector('.card__delete');
     deleteCard.addEventListener('click', function (event) {
         event.target.parentElement.remove();
-        let src = event.target.nextElementSibling.src;
-        let searchName = src.substring(src.length - 10, src.length);
-        let index = initialCards.findIndex(el => el.link.substring(el.link.length - 10, el.link.length) === searchName);
+        const src = event.target.nextElementSibling.src;
+        const searchName = src.substring(src.length - 10, src.length);
+        const index = initialCards.findIndex(el => el.link.substring(el.link.length - 10, el.link.length) === searchName);
         initialCards.splice(index, 1);
     }); 
 
@@ -104,14 +104,14 @@ function addCard(item) {
         addOpened(popupPhoto);
         popupImg.src = event.target.src;
         popupImg.alt = event.target.alt;
-        let popupName = document.querySelector('.popup__name');
+        const popupName = document.querySelector('.popup__name');
         popupName.textContent = event.target.alt;
     })
 }
 
 function formSubmitHandlerAdd (evt) {
     evt.preventDefault();
-    let card = {
+    const card = {
         name: cardName.value,
         link: cardLink.value
     };
@@ -130,7 +130,7 @@ initialCards.forEach(function (item) {
 // СОБЫТИЯ
 profileEdit.addEventListener('click', openPopup);
 profileAdd.addEventListener('click', openPopup);
-popupClose.forEach(function(popup) {
+popupsClose.forEach(function(popup) {
     popup.addEventListener('click', closePopup);
 })
 formEdit.addEventListener('submit', formSubmitHandler); 
