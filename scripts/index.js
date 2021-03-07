@@ -38,8 +38,6 @@ let popupAdd = document.querySelector('.popup_type_add');
 let profileEdit = document.querySelector('.profile__edit');
 let profileAdd = document.querySelector('.profile__add');
 let popupClose = document.querySelectorAll('.popup__close');
-let saveEdit = document.querySelector('.popup__save_type_edit');
-let saveAdd = document.querySelector('.popup__save_type_add');
 let popupPhoto = document.querySelector('.popup_type_open-photo');
 let popupImg = document.querySelector('.popup__img');
     //form
@@ -66,9 +64,9 @@ function openPopup(evt) {
 }
 
 function closePopup() {
-    popup[0].classList.remove('popup_opened');
-    popup[1].classList.remove('popup_opened');
-    popup[2].classList.remove('popup_opened');
+    popup.forEach(function(pop) {
+        pop.classList.remove('popup_opened');
+    })
 }
 
 function formSubmitHandler (evt) {
@@ -132,8 +130,8 @@ initialCards.forEach(function (item) {
 // СОБЫТИЯ
 profileEdit.addEventListener('click', openPopup);
 profileAdd.addEventListener('click', openPopup);
-popupClose[0].addEventListener('click', closePopup);
-popupClose[1].addEventListener('click', closePopup);
-popupClose[2].addEventListener('click', closePopup);
+popupClose.forEach(function(popup) {
+    popup.addEventListener('click', closePopup);
+})
 formEdit.addEventListener('submit', formSubmitHandler); 
 formAdd.addEventListener('submit', formSubmitHandlerAdd);
