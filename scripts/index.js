@@ -1,6 +1,6 @@
 const initialCards = [
     {
-      name: 'Россия',
+      name: 'Российская Федерация',
       link: './images/Russia.jpg'
     },
     {
@@ -104,8 +104,10 @@ function addCard(item) {
     const cardPhoto = cardElement.querySelector('.card__img');
     cardPhoto.addEventListener('click', function (event) {
         addOpened(popupPhoto);
-        console.log(popupImg)
         popupImg.src = event.target.src;
+        popupImg.alt = event.target.alt;
+        let popupName = document.querySelector('.popup__name');
+        popupName.textContent = event.target.alt;
     })
 }
 

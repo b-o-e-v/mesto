@@ -35,6 +35,7 @@
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__close/popup__close.css);
 @import url(../blocks/popup/__img/popup__img.css);
+@import url(../blocks/popup/__name/popup__name.css);
   /* footer */
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 

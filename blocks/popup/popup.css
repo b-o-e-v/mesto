@@ -9,7 +9,11 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0.5s, opacity 0.5s linear;
+          transition: visibility 0.5s, opacity 0.5s linear;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
