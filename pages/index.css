@@ -40,9 +40,6 @@
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
 /* МОДИФИКАТОРЫ */
-  /* header */
 @import url(../blocks/popup/_opened/popup_opened.css);
-  /* card */
 @import url(../blocks/card/__like/_active/card__like_active.css);
-  /* popup */
-@import url(../blocks/popup/__container/_type/popup__container_type_open-photo.css)
+@import url(../blocks/popup/__container/_type/popup__container_type_open-photo.css);
