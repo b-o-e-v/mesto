@@ -49,40 +49,36 @@ function createCard(item) {
     cardElement.querySelector('.card__img').src = item.link;
     cardElement.querySelector('.card__img').alt = item.name;
     cardElement.querySelector('.card__title').textContent = item.name;
+
+    const likeButton = cardElement.querySelector('.card__like');
+    likeButton.addEventListener('click', likeCard);
+    const deleteDelete = cardElement.querySelector('.card__delete');
+    deleteDelete.addEventListener('click', deleteCard); 
+    const cardPhoto = cardElement.querySelector('.card__img');
+    cardPhoto.addEventListener('click', openPhoto); 
+    
     return cardElement;
 } 
 
-function likeCard(cardElement) {
-    const button = cardElement.querySelector('.card__like');
-    button.addEventListener('click', function (event) {
-        const eventTarget = event.target;
-        eventTarget.classList.toggle('card__like_active');
-    }); 
+function likeCard(event) {
+    const eventTarget = event.target;
+    eventTarget.classList.toggle('card__like_active');
 }
 
-function deleteCard(cardElement) {
-    const deleteCard = cardElement.querySelector('.card__delete');
-    deleteCard.addEventListener('click', function (event) {
-        event.target.parentElement.remove();
-    }); 
+function deleteCard(event) {
+   event.target.parentElement.remove();
 }
 
-function openPhoto(cardElement) {
-    const cardPhoto = cardElement.querySelector('.card__img');
-    cardPhoto.addEventListener('click', function (event) {
-        openPopup(popupPhoto);
-        popupImg.src = event.target.src;
-        popupImg.alt = event.target.alt;
-        const popupName = document.querySelector('.popup__name');
-        popupName.textContent = event.target.alt;
-    })   
+function openPhoto(event) {
+   openPopup(popupPhoto);
+   popupImg.src = event.target.src;
+   popupImg.alt = event.target.alt;
+   const popupName = document.querySelector('.popup__name');
+   popupName.textContent = event.target.alt;
 }
 
 function addCard(cardElement) {
     cards.prepend(cardElement);
-    likeCard(cardElement);
-    deleteCard(cardElement);
-    openPhoto(cardElement);
 }
 
 function handleCardSubmit (evt) {
@@ -91,7 +87,7 @@ function handleCardSubmit (evt) {
         name: cardName.value,
         link: cardLink.value
     };
-    let element = createCard(card)
+    const element = createCard(card);
     addCard(element);
     closePopup(popupAdd);    
     formAdd.reset();
