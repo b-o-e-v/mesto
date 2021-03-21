@@ -105,6 +105,11 @@ profileEdit.addEventListener('click', openPropfilePopup);
 popupsClose.forEach(function(button) {
     const popup = button.closest('.popup');
     button.addEventListener('click', () => closePopup(popup));
+    popup.addEventListener('click', function (evt) {
+        if (evt.target === popup) {
+            closePopup(popup);
+        }
+    });
 }) 
 formEdit.addEventListener('submit', handleProfileSubmit); 
 formAdd.addEventListener('submit', handleCardSubmit);
