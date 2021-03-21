@@ -99,13 +99,6 @@ function handleCardSubmit (evt) {
     formAdd.reset();
 }
 
-function closePopupEscape(evt) {
-    if (evt.target === popup) {
-        closePopup(popup);
-    }
-    evt.target.removeEventListener('mousedown', closePopupEscape);
-}
-
 initialCards.forEach(function (item) {
     const element = createCard(item);
     addCard(element);
@@ -117,12 +110,17 @@ profileEdit.addEventListener('click', openPropfilePopup);
 popupsClose.forEach(function(button) {
     const popup = button.closest('.popup');
     button.addEventListener('click', () => closePopup(popup));
-    document.addEventListener('keydown', function (evt) {
+    document.addEventListener('keydown', function closePopupEscape(evt) {
         if (evt.key === 'Escape') {
             closePopup(popup);
         }    
-    })
-    popup.addEventListener('mousedown', closePopupEscape);
+        evt.target.removeEventListener('keydown', closePopupEscape);
+    });
+    popup.addEventListener('mousedown', function closePopupOverlay(evt) {
+        if (evt.target === popup) {
+            closePopup(popup);
+        }
+    });
 }) 
 formEdit.addEventListener('submit', handleProfileSubmit); 
 formAdd.addEventListener('submit', handleCardSubmit);
