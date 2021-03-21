@@ -31,9 +31,15 @@
             <section class="popup popup_type_edit">
                 <div class="popup__container">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form action="index.html" class="popup__form popup__form_type_edit" name="edit-profile">
-                        <input type="text" placeholder="Имя" class="popup__input popup__input_string_name" name="name">
-                        <input type="text" placeholder="О себе" class="popup__input popup__input_string_job" name="job">
+                    <form action="index.html" class="popup__form popup__form_type_edit" name="edit-profile" novalidate>
+                        <label for="name-input" class="popup__label">
+                            <input type="text" placeholder="Имя" class="popup__input popup__input_string_name" name="name" required minlength='2' maxlength='40' id="name-input" value="Жак-Ив Кусто">
+                            <span class="popup__input-error name-input-error"></span>
+                        </label>
+                        <label for="job-input" class="popup__label">
+                            <input type="text" placeholder="О себе" class="popup__input popup__input_string_job" name="job" required minlength='2' maxlength='200' id="job-input" value="Исследователь океана">
+                            <span class="popup__input-error job-input-error"></span>
+                        </label>
                         <button type="submit" value="Сохранить" class="popup__save">Сохранить</button>
                     </form>
                     <button type="button" class="popup__close"></button>
@@ -42,9 +48,15 @@
             <section class="popup popup_type_add">
                 <div class="popup__container">
                     <h2 class="popup__title">Новое место</h2>
-                    <form action="index.html" class="popup__form popup__form_type_add" name="add-profile">
-                        <input type="text" placeholder="Название" class="popup__input popup__input_string_card-name" name="card-name" required>
-                        <input type="text" placeholder="Ссылка на картинку" class="popup__input popup__input_string_card-link" name="card-link" required>
+                    <form action="index.html" class="popup__form popup__form_type_add" name="add-profile" novalidate>
+                        <label for="card-name-input" class="popup__label">
+                            <input type="text" placeholder="Название" class="popup__input popup__input_string_card-name" name="card-name" required minlength='2' maxlength='30' id="card-name-input">
+                            <span class="popup__input-error card-name-input-error"></span>
+                        </label>
+                        <label for="card-link-input" class="popup__label">
+                            <input type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_string_card-link" name="card-link" required id="card-link-input">
+                            <span class="popup__input-error card-link-input-error"></span>
+                        </label>
                         <button type="submit" value="Сохранить" class="popup__save">Cоздать</button>
                     </form>
                     <button type="button" class="popup__close"></button>
@@ -74,5 +86,6 @@
     </div>
     <script src="scripts/initial-сards.js"></script> 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 </html>
