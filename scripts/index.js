@@ -30,6 +30,12 @@ function openPropfilePopup() {
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
     openPopup(popupEdit);
+    const errs = document.querySelectorAll('.popup__input-error');
+    errs.forEach(function (err) {
+        err.classList.remove('popup__input-error_visible'); 
+    })
+    const btnSave = formEdit.querySelector('.popup__save');
+    btnSave.classList.remove('popup__save_disabled');
 }
 
 function closePopup(popup) {
@@ -94,8 +100,8 @@ function handleCardSubmit (evt) {
 }
 
 initialCards.forEach(function (item) {
-    const element = createCard(item)
-    addCard(element)
+    const element = createCard(item);
+    addCard(element);
 });
 
 
@@ -107,10 +113,10 @@ popupsClose.forEach(function(button) {
     button.addEventListener('click', () => closePopup(popup));
     document.addEventListener('keydown', function (evt) {
         if (evt.key === 'Escape') {
-            closePopup(popup)
+            closePopup(popup);
         }    
     })
-    popup.addEventListener('click', function (evt) {
+    popup.addEventListener('mousedown', function (evt) {
         if (evt.target === popup) {
             closePopup(popup);
         }
