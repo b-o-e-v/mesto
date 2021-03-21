@@ -99,11 +99,17 @@ function handleCardSubmit (evt) {
     formAdd.reset();
 }
 
+function closePopupEscape(evt) {
+    if (evt.target === popup) {
+        closePopup(popup);
+    }
+    evt.target.removeEventListener('mousedown', closePopupEscape);
+}
+
 initialCards.forEach(function (item) {
     const element = createCard(item);
     addCard(element);
 });
-
 
 // СОБЫТИЯ
 profileAdd.addEventListener('click', () => openPopup(popupAdd));
@@ -116,11 +122,7 @@ popupsClose.forEach(function(button) {
             closePopup(popup);
         }    
     })
-    popup.addEventListener('mousedown', function (evt) {
-        if (evt.target === popup) {
-            closePopup(popup);
-        }
-    });
+    popup.addEventListener('mousedown', closePopupEscape);
 }) 
 formEdit.addEventListener('submit', handleProfileSubmit); 
 formAdd.addEventListener('submit', handleCardSubmit);
