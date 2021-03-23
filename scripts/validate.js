@@ -1,10 +1,4 @@
-function enableValidation(obj) {
-  const inactiveButtonClass = obj.inactiveButtonClass;
-  const inputErrorClass = obj.inputErrorClass;
-  const errorClass = obj.errorClass;
-  const formSelector = obj.formSelector;
-  const inputSelector = obj.inputSelector;
-  const submitButtonSelector = obj.submitButtonSelector;
+function enableValidation({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) {
   const formList = Array.from(document.querySelectorAll(formSelector)); 
     
   formList.forEach((form) => {
