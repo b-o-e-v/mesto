@@ -23,4 +23,4 @@ export const initialCards = [
     name: 'Япония',
     link: './images/Japan.jpg'
   },
-]; 
+];

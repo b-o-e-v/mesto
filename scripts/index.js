@@ -2,6 +2,19 @@ import { initialCards } from './initial-сards.js'
 import Card from './Card.js'
 import * as Const from './Constants.js';
 
+// Добавить карточку
+function addCard(card) {
+  const element = new Card(card, '.card');
+  const cardElement = element.generateCard();
+  Const.cards.prepend(cardElement);
+}
+
+// Добавить все карточки из массива
+initialCards.forEach(function (card) {
+  addCard(card);
+});
+
+// Открыть попап
 export function openPopup(popup) {
   popup.classList.add('popup_opened');  
   document.addEventListener('keydown', closeByEscape);
@@ -19,24 +32,20 @@ function openPropfilePopup() {
   btnSave.classList.remove('popup__save_disabled');
 }
 
+// Закрыть попап
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup);
+  }
+}
+
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
 }
 
-function handleProfileSubmit (evt) {
-  evt.preventDefault();
-  Const.profileName.textContent = Const.nameInput.value;
-  Const.profileDescription.textContent = Const.jobInput.value;
-  closePopup(Const.popupEdit);      
-}
-
-function addCard(card) {
-  const element = new Card(card, '.card');
-  const cardElement = element.generateCard();
-  Const.cards.prepend(cardElement);
-}
-
+// Отправить форму
 function handleCardSubmit (evt) {
   evt.preventDefault();
   const card = {
@@ -48,16 +57,14 @@ function handleCardSubmit (evt) {
   Const.formAdd.reset();
 }
 
-function closeByEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
-    closePopup(openedPopup);
-  }}
+function handleProfileSubmit (evt) {
+  evt.preventDefault();
+  Const.profileName.textContent = Const.nameInput.value;
+  Const.profileDescription.textContent = Const.jobInput.value;
+  closePopup(Const.popupEdit);      
+}
 
-initialCards.forEach(function (card) {
-  addCard(card);
-});
-
+// Слушатели
 Const.profileAdd.addEventListener('click', () => openPopup(Const.popupAdd));
 Const.profileEdit.addEventListener('click', openPropfilePopup);
 Const.closeButtons.forEach(function(button) {
