@@ -4,7 +4,7 @@ import Card from './Card.js'
 import FormValidator from './FormValidator.js'
 import * as Const from './Constants.js';
 
-//Включить валидацию
+// Включить валидацию
 const validate = new FormValidator(initialValidate, '.popup__form');
 validate.enableValidation()
 
@@ -26,19 +26,26 @@ export function openPopup(popup) {
   document.addEventListener('keydown', closeByEscape);
 }
 
+// Открыть попап редактирования профиля
 function openPropfilePopup() {
   Const.nameInput.value = Const.profileName.textContent;
   Const.jobInput.value = Const.profileDescription.textContent;
   openPopup(Const.popupEdit);
   const errs = document.querySelectorAll('.popup__input-error');
   errs.forEach(function (err) {
-    err.classList.remove('popup__input-error_visible'); 
+    err.classList.remove('popup__input-error_visible');
   })
   const btnSave = Const.formEdit.querySelector('.popup__save');
   btnSave.classList.remove('popup__save_disabled');
 }
 
 // Закрыть попап
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
+}
+
+// Закрыть попап кнопкой Escape
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened')
@@ -46,23 +53,21 @@ function closeByEscape(evt) {
   }
 }
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeByEscape);
-}
-
-// Отправить форму
+// Отправить форму добавления карточки
 function handleCardSubmit (evt) {
   evt.preventDefault();
   const card = {
     name: Const.cardName.value,
     link: Const.cardLink.value
   };
+  const btnSave = Const.formAdd.querySelector('.popup__save');
+  btnSave.classList.add('popup__save_disabled');
   addCard(card);
   closePopup(Const.popupAdd);    
   Const.formAdd.reset();
 }
 
+// Отправить форму редактирования профиля
 function handleProfileSubmit (evt) {
   evt.preventDefault();
   Const.profileName.textContent = Const.nameInput.value;
