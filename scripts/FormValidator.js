@@ -9,7 +9,7 @@ export default class FormValidator {
   }
 
   _toggleButtonState(inputList, buttonElement) {
-    if(this._hasInvalidInput(inputList)){
+    if(this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(this._inactiveButtonClass);
     } else {
       buttonElement.classList.remove(this._inactiveButtonClass);

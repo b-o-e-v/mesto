@@ -2,11 +2,11 @@ import { initialCards } from './initial-сards.js'
 import { initialValidate } from './initial-validate.js'
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import * as Const from './Constants.js';
+import * as Const from './Constants.js'
 
 // Включить валидацию
 const validate = new FormValidator(initialValidate, '.popup__form');
-validate.enableValidation()
+validate.enableValidation();
 
 // Добавить карточку
 function addCard(card) {
@@ -48,7 +48,7 @@ function closePopup(popup) {
 // Закрыть попап кнопкой Escape
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
+    const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
 }
