@@ -1,6 +1,12 @@
 import { initialCards } from './initial-сards.js'
+import { initialValidate } from './initial-validate.js'
 import Card from './Card.js'
+import FormValidator from './FormValidator.js'
 import * as Const from './Constants.js';
+
+//Включить валидацию
+const validate = new FormValidator(initialValidate, '.popup__form');
+validate.enableValidation()
 
 // Добавить карточку
 function addCard(card) {
@@ -9,7 +15,7 @@ function addCard(card) {
   Const.cards.prepend(cardElement);
 }
 
-// Добавить все карточки из массива
+// Добавить все карточки из массива на страницу
 initialCards.forEach(function (card) {
   addCard(card);
 });
