@@ -51,20 +51,20 @@ export default class FormValidator {
         this._checkInputValidity(form, inputEl);
         this._toggleButtonState(inputList, buttonElement);
       });
+      form.nextElementSibling.addEventListener('click', () => {
+        this._hideInputError(form, inputEl);
+      });
+    });
+    form.querySelector(this._submitButtonSelector).addEventListener('click', (e) => {
+      e.target.classList.add(this._inactiveButtonClass);
     });
   };
 
   enableValidation() {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
+    const form = document.querySelector(this._formSelector);
+    const inputList = Array.from(form.querySelectorAll(this._inputSelector));
+    const buttonElement = form.querySelector(this._submitButtonSelector);
 
-    formList.forEach((form) => {
-      const inputList = Array.from(form.querySelectorAll(this._inputSelector));
-      const buttonElement = form.querySelector(this._submitButtonSelector);
-
-      this._setEventListeners(form, inputList, buttonElement);
-      form.addEventListener('submit', () => {
-        this._toggleButtonState(inputList, buttonElement);
-      });
-    });
+    this._setEventListeners(form, inputList, buttonElement);
   };
 }

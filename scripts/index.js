@@ -5,14 +5,23 @@ import FormValidator from './FormValidator.js'
 import * as Const from './Constants.js'
 
 // Включить валидацию
-const validate = new FormValidator(initialValidate, '.popup__form');
-validate.enableValidation();
+function enableValidation(formSelector) {
+  const validate = new FormValidator(initialValidate, formSelector);
+  validate.enableValidation();
+}
 
+enableValidation('.popup__form_type_edit');
+enableValidation('.popup__form_type_add');
+
+// Создать карточку
+function createCard(data, cardSelector) {
+  const element = new Card(data, cardSelector, handleCardClick);
+  const cardElement = element.generateCard();
+  return cardElement;
+}
 // Добавить карточку
 function addCard(card) {
-  const element = new Card(card, '.card');
-  const cardElement = element.generateCard();
-  Const.cards.prepend(cardElement);
+  Const.cards.prepend(createCard(card, '.card'));
 }
 
 // Добавить все карточки из массива на страницу
@@ -31,12 +40,6 @@ function openPropfilePopup() {
   Const.nameInput.value = Const.profileName.textContent;
   Const.jobInput.value = Const.profileDescription.textContent;
   openPopup(Const.popupEdit);
-  const errs = document.querySelectorAll('.popup__input-error');
-  errs.forEach(function (err) {
-    err.classList.remove('popup__input-error_visible');
-  })
-  const btnSave = Const.formEdit.querySelector('.popup__save');
-  btnSave.classList.remove('popup__save_disabled');
 }
 
 // Закрыть попап
@@ -53,6 +56,14 @@ function closeByEscape(evt) {
   }
 }
 
+// Открыть попап с изображением
+function handleCardClick(name, link) {
+  Const.popupImg.src = link;
+  Const.popupImg.alt = name;
+  Const.popupName.textContent = name;
+  openPopup(Const.popupPhoto);
+}
+
 // Отправить форму добавления карточки
 function handleCardSubmit (evt) {
   evt.preventDefault();
@@ -60,11 +71,9 @@ function handleCardSubmit (evt) {
     name: Const.cardName.value,
     link: Const.cardLink.value
   };
-  const btnSave = Const.formAdd.querySelector('.popup__save');
-  btnSave.classList.add('popup__save_disabled');
   addCard(card);
-  closePopup(Const.popupAdd);    
-  Const.formAdd.reset();
+  closePopup(Const.popupAdd);
+  Const.formAdd.reset()
 }
 
 // Отправить форму редактирования профиля

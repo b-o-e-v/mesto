@@ -9,6 +9,9 @@ export const popupAdd = document.querySelector('.popup_type_add');
 export const profileEdit = document.querySelector('.profile__edit');
 export const profileAdd = document.querySelector('.profile__add');
 export const closeButtons = document.querySelectorAll('.popup__close');
+export const popupPhoto = document.querySelector('.popup_type_open-photo');
+export const popupImg = document.querySelector('.popup__img');
+export const popupName = document.querySelector('.popup__name');
 //form
 export const formEdit = document.querySelector('.popup__form_type_edit');
 export const formAdd = document.querySelector('.popup__form_type_add');
