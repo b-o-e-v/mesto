@@ -10,9 +10,6 @@ function enableValidation(formSelector) {
   validate.enableValidation();
 }
 
-enableValidation('.popup__form_type_edit');
-enableValidation('.popup__form_type_add');
-
 // Создать карточку
 function createCard(data, cardSelector) {
   const element = new Card(data, cardSelector, handleCardClick);
@@ -33,6 +30,8 @@ initialCards.forEach(function (card) {
 export function openPopup(popup) {
   popup.classList.add('popup_opened');  
   document.addEventListener('keydown', closeByEscape);
+  enableValidation('.popup__form_type_edit');
+  enableValidation('.popup__form_type_add');
 }
 
 // Открыть попап редактирования профиля
@@ -81,7 +80,7 @@ function handleProfileSubmit (evt) {
   evt.preventDefault();
   Const.profileName.textContent = Const.nameInput.value;
   Const.profileDescription.textContent = Const.jobInput.value;
-  closePopup(Const.popupEdit);      
+  closePopup(Const.popupEdit);
 }
 
 // Слушатели
