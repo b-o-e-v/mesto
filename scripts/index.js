@@ -8,7 +8,7 @@ import * as constants from './constants.js'
 function enableValidation(formSelector) {
   const validate = new FormValidator(initialValidate, formSelector);
   validate.enableValidation();
-  return validate
+  return validate;
 }
 
 const profileValidator = enableValidation('.popup__form_type_edit');
@@ -75,7 +75,7 @@ function handleCardSubmit (evt) {
   };
   addCard(card);
   closePopup(constants.popupAdd);
-  constants.formAdd.reset()
+  constants.formAdd.reset();
 }
 
 // Отправить форму редактирования профиля
