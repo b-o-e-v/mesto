@@ -2,7 +2,7 @@ import { initialCards } from './initial-сards.js'
 import { initialValidate } from './initial-validate.js'
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import * as constants from './constants.js'
+import * as constants from './constant.js'
 
 // Включить валидацию
 function enableValidation(formSelector) {
