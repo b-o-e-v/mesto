@@ -2,13 +2,17 @@ import { initialCards } from './initial-сards.js'
 import { initialValidate } from './initial-validate.js'
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-import * as Const from './Constants.js'
+import * as constants from './constants.js'
 
 // Включить валидацию
 function enableValidation(formSelector) {
   const validate = new FormValidator(initialValidate, formSelector);
   validate.enableValidation();
+  return validate
 }
+
+const profileValidator = enableValidation('.popup__form_type_edit');
+const addCardValidator = enableValidation('.popup__form_type_add');
 
 // Создать карточку
 function createCard(data, cardSelector) {
@@ -18,7 +22,7 @@ function createCard(data, cardSelector) {
 }
 // Добавить карточку
 function addCard(card) {
-  Const.cards.prepend(createCard(card, '.card'));
+  constants.cards.prepend(createCard(card, '#card'));
 }
 
 // Добавить все карточки из массива на страницу
@@ -30,15 +34,14 @@ initialCards.forEach(function (card) {
 export function openPopup(popup) {
   popup.classList.add('popup_opened');  
   document.addEventListener('keydown', closeByEscape);
-  enableValidation('.popup__form_type_edit');
-  enableValidation('.popup__form_type_add');
 }
 
 // Открыть попап редактирования профиля
 function openPropfilePopup() {
-  Const.nameInput.value = Const.profileName.textContent;
-  Const.jobInput.value = Const.profileDescription.textContent;
-  openPopup(Const.popupEdit);
+  profileValidator.resetValidation();
+  constants.nameInput.value = constants.profileName.textContent;
+  constants.jobInput.value = constants.profileDescription.textContent;
+  openPopup(constants.popupEdit);
 }
 
 // Закрыть попап
@@ -57,36 +60,39 @@ function closeByEscape(evt) {
 
 // Открыть попап с изображением
 function handleCardClick(name, link) {
-  Const.popupImg.src = link;
-  Const.popupImg.alt = name;
-  Const.popupName.textContent = name;
-  openPopup(Const.popupPhoto);
+  constants.popupImg.src = link;
+  constants.popupImg.alt = name;
+  constants.popupName.textContent = name;
+  openPopup(constants.popupPhoto);
 }
 
 // Отправить форму добавления карточки
 function handleCardSubmit (evt) {
   evt.preventDefault();
   const card = {
-    name: Const.cardName.value,
-    link: Const.cardLink.value
+    name: constants.cardName.value,
+    link: constants.cardLink.value
   };
   addCard(card);
-  closePopup(Const.popupAdd);
-  Const.formAdd.reset()
+  closePopup(constants.popupAdd);
+  constants.formAdd.reset()
 }
 
 // Отправить форму редактирования профиля
 function handleProfileSubmit (evt) {
   evt.preventDefault();
-  Const.profileName.textContent = Const.nameInput.value;
-  Const.profileDescription.textContent = Const.jobInput.value;
-  closePopup(Const.popupEdit);
+  constants.profileName.textContent = constants.nameInput.value;
+  constants.profileDescription.textContent = constants.jobInput.value;
+  closePopup(constants.popupEdit);
 }
 
 // Слушатели
-Const.profileAdd.addEventListener('click', () => openPopup(Const.popupAdd));
-Const.profileEdit.addEventListener('click', openPropfilePopup);
-Const.closeButtons.forEach(function(button) {
+constants.profileAdd.addEventListener('click', () => {
+  addCardValidator.resetValidation();
+  openPopup(constants.popupAdd);
+});
+constants.profileEdit.addEventListener('click', openPropfilePopup);
+constants.closeButtons.forEach(function(button) {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
   popup.addEventListener('mousedown', function closePopupOverlay(evt) {
@@ -95,5 +101,5 @@ Const.closeButtons.forEach(function(button) {
     }
   });
 }) 
-Const.formEdit.addEventListener('submit', handleProfileSubmit); 
-Const.formAdd.addEventListener('submit', handleCardSubmit);
+constants.formEdit.addEventListener('submit', handleProfileSubmit); 
+constants.formAdd.addEventListener('submit', handleCardSubmit);
