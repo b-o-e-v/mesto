@@ -1,8 +1,6 @@
 //profile
 export const profileName = document.querySelector('.profile__name');
 export const profileDescription = document.querySelector('.profile__description');
-//cards
-export const cards = document.querySelector('.cards');
 //popup
 export const popupEdit = document.querySelector('.popup_type_edit');
 export const popupAdd = document.querySelector('.popup_type_add');

@@ -1,26 +1,33 @@
+import Russia from '../images/Russia.jpg';
+import Norway from '../images/Norway.jpg';
+import USA from '../images/USA.jpg';
+import Italy from '../images/Italy.jpg';
+import Switzerland from '../images/Switzerland.jpg';
+import Japan from '../images/Japan.jpg';
+
 export const initialCards = [
   {
     name: 'Российская Федерация',
-    link: './images/Russia.jpg'
+    link: Russia
   },
   {
     name: 'Норвегия',
-    link: './images/Norway.jpg'
+    link: Norway
   },
   {
     name: 'США',
-    link: './images/USA.jpg'
+    link: USA
   },
   {
     name: 'Италия',
-    link: './images/Italy.jpg'
+    link: Italy
   },
   {
     name: 'Швейцария',
-    link: './images/Switzerland.jpg'
+    link: Switzerland
   },
   {
     name: 'Япония',
-    link: './images/Japan.jpg'
+    link: Japan
   },
 ];
