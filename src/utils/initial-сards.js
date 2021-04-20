@@ -1,9 +1,9 @@
-import Russia from '../images/Russia.jpg';
-import Norway from '../images/Norway.jpg';
-import USA from '../images/USA.jpg';
-import Italy from '../images/Italy.jpg';
-import Switzerland from '../images/Switzerland.jpg';
-import Japan from '../images/Japan.jpg';
+import Russia from '../images/Russia.jpg'
+import Norway from '../images/Norway.jpg'
+import USA from '../images/USA.jpg'
+import Italy from '../images/Italy.jpg'
+import Switzerland from '../images/Switzerland.jpg'
+import Japan from '../images/Japan.jpg'
 
 export const initialCards = [
   {
@@ -30,4 +30,4 @@ export const initialCards = [
     name: 'Япония',
     link: Japan
   },
-];
+]
