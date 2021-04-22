@@ -30,6 +30,10 @@ module.exports = {
         exclude: '/node_modules/'
       },
       {
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+      {
         // регулярное выражение, которое ищет все файлы с такими расширениями
         test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource'

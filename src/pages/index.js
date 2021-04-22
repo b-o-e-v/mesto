@@ -11,6 +11,20 @@ import {
   profileEdit
 } from '../utils/constants.js'
 import './index.css'
+import '../index.html'
+
+// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function generateCard(card) {
+  const element = new Card(card, '#card', PopupImg.open)
+  return element.generateCard()
+}
+
+// ФУНКЦИЯ ВАЛИДАЦИИ ПОЛЕЙ ФОРМ
+function enableValidation(formSelector) {
+  const validate = new FormValidator(initialValidate, formSelector)
+  validate.enableValidation()
+  return validate
+}
 
 // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
 const User = new UserInfo({
@@ -23,17 +37,13 @@ const PopupImg = new PopupWithImage('.popup_type_open-photo')
 const PopupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   submit: (card) => {
-    const element = new Card(card, '#card', PopupImg.open)
-    const cardElement = element.generateCard()
-    CardList.setItem(cardElement)
-    PopupAdd.close()
+    CardList.setItem(generateCard(card))
   }
 })
 const PopupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   submit: (profileData) => {
     User.setUserInfo(profileData)
-    PopupEdit.close()
   }
 })
 
@@ -41,29 +51,18 @@ const PopupEdit = new PopupWithForm({
 const CardList = new Section({
   data: initialCards,
   renderer: (card) => {
-    const element = new Card(card, '#card', PopupImg.open)
-    const cardElement = element.generateCard()
-    CardList.setItem(cardElement)
+    CardList.setItem(generateCard(card))
   }
 }, '.cards')
 CardList.renderItems()
 
-// ВАЛИДАЦИЯ ПОЛЕЙ ФОРМ
-function enableValidation(formSelector) {
-  const validate = new FormValidator(initialValidate, formSelector)
-  validate.enableValidation()
-  return validate
-}
-const profileValidator = enableValidation('.popup__form_type_edit')
-const addCardValidator = enableValidation('.popup__form_type_add')
-
 // СЛУШАТЕЛИ
 profileAdd.addEventListener('click', () => {
-  addCardValidator.resetValidation()
+  enableValidation('.popup__form_type_add').resetValidation()
   PopupAdd.setEventListeners()
 })
 profileEdit.addEventListener('click', () => {
-  profileValidator.resetValidation()
+  enableValidation('.popup__form_type_edit').resetValidation()
   User.getUserInfo()
   PopupEdit.setEventListeners()
 })
