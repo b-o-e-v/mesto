@@ -15,7 +15,7 @@ import '../index.html'
 
 // ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
 function generateCard(card) {
-  const element = new Card(card, '#card', PopupImg.open)
+  const element = new Card(card, '#card', popupImg.open)
   return element.generateCard()
 }
 
@@ -27,42 +27,42 @@ function enableValidation(formSelector) {
 }
 
 // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
-const User = new UserInfo({
+const user = new UserInfo({
   nameSelector: '.profile__name',
   aboutSelector: '.profile__description'
 })
 
 // СОЗДАТЬ КЛАССЫ ПОПАПОВ
-const PopupImg = new PopupWithImage('.popup_type_open-photo')
-const PopupAdd = new PopupWithForm({
+const popupImg = new PopupWithImage('.popup_type_open-photo')
+const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   submit: (card) => {
-    CardList.setItem(generateCard(card))
+    cardList.setItem(generateCard(card))
   }
 })
-const PopupEdit = new PopupWithForm({
+const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   submit: (profileData) => {
-    User.setUserInfo(profileData)
+    user.setUserInfo(profileData)
   }
 })
 
 // ДОБАВИТЬ МАССИВ КАРТОЧЕК НА СТРАНИЦУ
-const CardList = new Section({
+const cardList = new Section({
   data: initialCards,
   renderer: (card) => {
-    CardList.setItem(generateCard(card))
+    cardList.setItem(generateCard(card))
   }
 }, '.cards')
-CardList.renderItems()
+cardList.renderItems()
 
 // СЛУШАТЕЛИ
 profileAdd.addEventListener('click', () => {
   enableValidation('.popup__form_type_add').resetValidation()
-  PopupAdd.setEventListeners()
+  popupAdd.setEventListeners()
 })
 profileEdit.addEventListener('click', () => {
   enableValidation('.popup__form_type_edit').resetValidation()
-  User.getUserInfo()
-  PopupEdit.setEventListeners()
+  user.getUserInfo()
+  popupEdit.setEventListeners()
 })
