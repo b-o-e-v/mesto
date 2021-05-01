@@ -15,10 +15,10 @@
         <main class="main">
             <section class="profile">
                 <div class="profile__info">
-                    <img src="./images/avatar.png" alt="аватар" class="profile__avatar">
+                    <img src="./images/avatar.jpeg" alt="аватар" class="profile__avatar">
                     <div class="profile__about">
-                        <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <p class="profile__description">Исследователь океана</p>    
+                        <h1 class="profile__name"></h1>
+                        <p class="profile__description"></p>    
                     </div>
                     <button class="profile__edit" type="button"></button>
                 </div>
@@ -32,11 +32,11 @@
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <form action="index.html" class="popup__form popup__form_type_edit" name="edit-profile" novalidate>
                         <label for="name-input" class="popup__label">
-                            <input type="text" placeholder="Имя" class="popup__input popup__input_string_name" name="name" required minlength='2' maxlength='40' id="name-input" value="Жак-Ив Кусто">
+                            <input type="text" placeholder="Имя" class="popup__input popup__input_string_name" name="name" required minlength='2' maxlength='40' id="name-input" value="">
                             <span class="popup__input-error name-input-error"></span>
                         </label>
                         <label for="job-input" class="popup__label">
-                            <input type="text" placeholder="О себе" class="popup__input popup__input_string_job" name="about" required minlength='2' maxlength='200' id="job-input" value="Исследователь океана">
+                            <input type="text" placeholder="О себе" class="popup__input popup__input_string_job" name="about" required minlength='2' maxlength='200' id="job-input" value="">
                             <span class="popup__input-error job-input-error"></span>
                         </label>
                         <button type="submit" value="Сохранить" class="popup__save">Сохранить</button>
@@ -61,6 +61,13 @@
                     <button type="button" class="popup__close"></button>
                 </div>
             </section>
+            <section class="popup popup_type_delete">
+              <div class="popup__container">
+                  <h2 class="popup__title">Вы уверены?</h2>
+                  <button type="submit" value="Сохранить" class="popup__save">Да</button>
+                  <button type="button" class="popup__close"></button>
+              </div>
+            </section>
             <section class="popup popup_type_open-photo">
                 <div class="popup__container popup__container_type_open-photo">
                     <img class="popup__img" alt="#" src="#">
@@ -75,7 +82,10 @@
                 <img class="card__img" alt="#" src="#">
                 <div class="card__description">
                     <h2 class="card__title"></h2>
-                    <button class="card__like" type="button"></button>
+                    <div class="card__container">
+                      <button class="card__like" type="button"></button>
+                      <span class="card__like-count"></span>
+                    </div>
                 </div>
             </li>
         </template> 

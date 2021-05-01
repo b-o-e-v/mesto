@@ -4,9 +4,11 @@ import {
 } from '../utils/constants.js'
 
 export default class UserInfo {
-  constructor({ nameSelector, aboutSelector }) {
+  constructor({ nameSelector, aboutSelector, avatarSelector }, api) {
     this._nameSelector = document.querySelector(nameSelector)
     this._aboutSelector = document.querySelector(aboutSelector)
+    this._avatarSelector = document.querySelector(avatarSelector)
+    this._api = api
   }
 
   getUserInfo() {
@@ -14,8 +16,27 @@ export default class UserInfo {
     jobInput.value = this._aboutSelector.textContent
   }
 
-  setUserInfo(profileData) {
-    this._nameSelector.textContent = profileData.name
-    this._aboutSelector.textContent = profileData.about  
+  setUserAvatar() {
+    this._api
+      .getUserInfo()
+      .then((data) => {
+        this._avatarSelector.src = data.avatar
+      })
+      .catch((err) => console.log(err))
+  }
+
+  setUserDesc() {
+    this._api
+      .getUserInfo()
+      .then((data) => {
+        this._nameSelector.textContent = data.name
+        this._aboutSelector.textContent = data.about
+      })
+      .catch((err) => console.log(err))
+  }
+
+  setUserInfo() {
+    this.setUserAvatar()
+    this.setUserDesc() 
   }
 }
