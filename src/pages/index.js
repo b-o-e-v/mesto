@@ -9,7 +9,8 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js'
 import UserInfo from '../components/UserInfo.js'
 import {
   profileAdd,
-  profileEdit
+  profileEdit,
+  photoUpdate
 } from '../utils/constants.js'
 import {
   group,
@@ -69,13 +70,27 @@ const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   submit: (card) => {
     const cardList = new Section({}, '.cards', api, generateCard)
-    cardList.saveItem(card)
+    cardList.saveItem(card, popupAdd.close)
   }
 })
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   submit: (InputValues) => {
-    api.editUserDesc(InputValues).then(() => user.setUserDesc())
+    api.editUserDesc(InputValues)
+      .then(() => {
+        user.setUserDesc()
+        popupEdit.close()
+      })
+  }
+})
+const popupUpdate = new PopupWithForm({
+  popupSelector: '.popup_type_update',
+  submit: (InputValues) => {
+    api.updatePhoto(InputValues)
+      .then(() => {
+        user.setUserAvatar()
+        popupUpdate.close()
+      })
   }
 })
 
@@ -88,4 +103,8 @@ profileEdit.addEventListener('click', () => {
   enableValidation('.popup__form_type_edit').resetValidation()
   user.getUserInfo()
   popupEdit.setEventListeners()
+})
+photoUpdate.addEventListener('click', () => {
+  enableValidation('.popup__form_type_update').resetValidation()
+  popupUpdate.setEventListeners()
 })

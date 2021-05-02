@@ -1,6 +1,7 @@
 //popup
 export const profileEdit = document.querySelector('.profile__edit')
 export const profileAdd = document.querySelector('.profile__add')
+export const photoUpdate = document.querySelector('.profile__avatar-btn')
 export const popupImg = document.querySelector('.popup__img')
 export const popupName = document.querySelector('.popup__name')
 //form

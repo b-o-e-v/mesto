@@ -30,6 +30,7 @@ export default class UserInfo {
       .getUserInfo()
       .then((data) => {
         this._nameSelector.textContent = data.name
+        this._nameSelector.id = data._id
         this._aboutSelector.textContent = data.about
       })
       .catch((err) => console.log(err))

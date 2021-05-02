@@ -4,7 +4,7 @@ export default class Card {
     this._link = data.link
     this._author = data.owner._id
     this._id = data._id
-    this._like = data.likes.length
+    this._likes = data.likes
     this._cardSelector = cardSelector
     this._openImg = openImg
     this._openSubmit = openSubmit
@@ -19,8 +19,30 @@ export default class Card {
     return cardElement
   }
 
-  _likeCard() {
-    this._element.querySelector('.card__like').classList.toggle('card__like_active')
+  _putLike(cardId) {
+    this._api
+      .putLike(cardId)
+      .then((res) => {
+        this._like.classList.add('card__like_active')
+        this._element.querySelector('.card__like-count').textContent = res.likes.length
+      })
+  }
+
+  _removeLike(cardId) {
+    this._api
+    .removeLike(cardId)
+    .then((res) => {
+      this._like.classList.remove('card__like_active')
+      this._element.querySelector('.card__like-count').textContent = res.likes.length
+    })
+  }
+
+  _likeCard(cardId) {
+    if (this._like.classList.contains('card__like_active')) {
+      this._removeLike(cardId)
+    } else {
+      this._putLike(cardId)
+    }
   }
 
   _deleteCard(cardId) {
@@ -31,7 +53,7 @@ export default class Card {
   _setEventListeners() {
     const likeButton = this._element.querySelector('.card__like')
     likeButton.addEventListener('click', () => {
-      this._likeCard()
+      this._likeCard(this._id)
     })
 
     const deleteDelete = this._element.querySelector('.card__delete')   
@@ -52,14 +74,20 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate()
     this._cardPhoto = this._element.querySelector('.card__img')
+    this._like = this._element.querySelector('.card__like')
     this._setEventListeners()
 
     this._cardPhoto.src = this._link
     this._cardPhoto.alt = this._name
     this._cardPhoto.id = this._id
     this._element.querySelector('.card__title').textContent = this._name
-    this._element.querySelector('.card__like-count').textContent = this._like
+    this._element.querySelector('.card__like-count').textContent = this._likes.length
 
+    this._likes.forEach((item) => {
+      if(item._id === document.querySelector('.profile__name').id) {
+        this._like.classList.add('card__like_active')
+      }
+    })
     return this._element
   }
 }

@@ -11,11 +11,12 @@ export default class Section {
     this._container.prepend(element)
   }
 
-  saveItem(data) {
+  saveItem(data, func) {
     this._api
       .addCard(data)
       .then((data) => {
         this.setItem(this._generateCard(data))
+        func()
       })
       .catch((err) => console.log(err))
   }
