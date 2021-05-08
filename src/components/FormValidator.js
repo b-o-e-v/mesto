@@ -13,6 +13,7 @@ export default class FormValidator {
     );
   }
 
+  // Внешний вид кнопки
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -21,12 +22,14 @@ export default class FormValidator {
     }
   }
 
+  // Проверка инпутов
   _hasInvalidInput() {
     return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
+  // Показать ошибки
   _showInputError(inputEl, errorMessage) {
     const errorElement = this._form.querySelector(`.${inputEl.id}-error`);
     errorElement.classList.add(this._inputErrorClass);
@@ -34,6 +37,7 @@ export default class FormValidator {
     errorElement.classList.add(this._errorClass);
   }
 
+  // Спрятать ошибки
   _hideInputError(inputEl) {
     const errorElement = this._form.querySelector(`.${inputEl.id}-error`);
     errorElement.classList.remove(this._inputErrorClass);
@@ -41,6 +45,7 @@ export default class FormValidator {
     errorElement.textContent = "";
   }
 
+  // Видимость ошибок
   _checkInputValidity(inputEl) {
     if (!inputEl.validity.valid) {
       this._showInputError(inputEl, inputEl.validationMessage);
@@ -49,6 +54,7 @@ export default class FormValidator {
     }
   }
 
+  // Слушатель
   _setEventListeners() {
     this._toggleButtonState();
     this._inputList.forEach((inputEl) => {
@@ -59,6 +65,7 @@ export default class FormValidator {
     });
   }
 
+  // Очистить ошибки
   resetValidation() {
     this._inputList.forEach((inputEl) => {
       this._hideInputError(inputEl);
@@ -66,6 +73,7 @@ export default class FormValidator {
     this._toggleButtonState();
   }
 
+  // Включить валидацию
   enableValidation() {
     this._setEventListeners();
   }

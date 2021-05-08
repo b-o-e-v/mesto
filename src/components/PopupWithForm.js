@@ -18,6 +18,7 @@ export default class PopupWithForm extends Popup {
     this._submit = submit;
   }
 
+  // Получить значения инпутов
   _getInputValues() {
     const inputData = {};
     this._allInputFields.forEach((input) => {
@@ -26,6 +27,7 @@ export default class PopupWithForm extends Popup {
     return inputData;
   }
 
+  // Отправить форму
   _handleSubmit(evt) {
     evt.preventDefault();
     this._form.querySelector(popupSaveSelector).textContent = "Сохранение...";
@@ -34,11 +36,13 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  // Слушатель
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", this._handleSubmit);
   }
 
+  // Закрыть попап
   close() {
     super.close();
     this._form.reset();

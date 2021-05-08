@@ -11,22 +11,26 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
+  // Закрытие попапа Escape
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.close();
     }
   }
 
+  // Открыть попап
   open() {
     this._popupElement.classList.add(popupOpenedSelector);
     document.addEventListener("keydown", this._handleEscClose);
   }
 
+  // Закрыть попап
   close() {
     this._popupElement.classList.remove(popupOpenedSelector);
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
+  // Слушатель
   setEventListeners() {
     this._popupElement.addEventListener("click", (evt) => {
       if (

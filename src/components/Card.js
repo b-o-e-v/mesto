@@ -12,7 +12,7 @@ import {
 export default class Card {
   constructor(
     data,
-    cardSelector,
+    templateSelector,
     openImg,
     popupDelete,
     heandlerPutLike,
@@ -25,7 +25,7 @@ export default class Card {
     this._author = data.owner._id;
     this._cardId = data._id;
     this._likes = data.likes;
-    this._cardSelector = cardSelector;
+    this._templateSelector = templateSelector;
     this._openImg = openImg;
     this._popupDelete = popupDelete;
     this._deleteCard = this._deleteCard.bind(this);
@@ -35,13 +35,14 @@ export default class Card {
     this._userId = id;
   }
 
+  // Получить разметку карточки
   _getTemplate() {
-    const cardTemplate = document.querySelector(this._cardSelector).content;
+    const cardTemplate = document.querySelector(this._templateSelector).content;
     const cardElement = cardTemplate.querySelector(cardSelector).cloneNode(true);
-
     return cardElement;
   }
 
+  // Поставить лайк
   _putLike() {
     this._heandlerPutLike(this._cardId)
       .then((res) => {
@@ -55,6 +56,7 @@ export default class Card {
       });
   }
 
+  // Удалить лайк
   _removeLike() {
     this._heandlerRemoveLike(this._cardId)
       .then((res) => {
@@ -68,6 +70,7 @@ export default class Card {
       });
   }
 
+  // Рабочий лайк
   _likeCard() {
     if (this._like.classList.contains(likeActiveSelector)) {
       this._removeLike();
@@ -76,6 +79,7 @@ export default class Card {
     }
   }
 
+  // Удалить карточку
   _deleteCard() {
     this._heandlerDeleteCard(this._cardId)
       .then((res) => {
@@ -88,18 +92,18 @@ export default class Card {
     this._popupDelete.close();
   }
 
+  // Слушатель
   _setEventListeners() {
-    const likeButton = this._element.querySelector(cardLikeSelector);
-    likeButton.addEventListener("click", () => {
+    this._like.addEventListener("click", () => {
       this._likeCard();
     });
 
-    const deleteDelete = this._element.querySelector(cardDeleteSelector);
+    this._deleteDelete = this._element.querySelector(cardDeleteSelector);
     if (this._userId === this._author) {
-      deleteDelete.classList.add(showBlockSelector);
+      this._deleteDelete.classList.add(showBlockSelector);
     }
 
-    deleteDelete.addEventListener("click", () => {
+    this._deleteDelete.addEventListener("click", () => {
       this._popupDelete.open();
       this._popupDelete.setEventListeners(this._deleteCard, this._cardPhoto.id);
     });
@@ -108,6 +112,7 @@ export default class Card {
     });
   }
 
+  // Проверить лайки на карточках
   _checkLikes() {
     this._likes.forEach((item) => {
       if (item._id === this._userId) {
@@ -116,6 +121,7 @@ export default class Card {
     });
   }
 
+  // Создать карточку
   generateCard() {
     this._element = this._getTemplate();
     this._cardPhoto = this._element.querySelector(cardImgSelector);

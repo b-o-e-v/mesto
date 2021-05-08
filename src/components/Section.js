@@ -4,10 +4,12 @@ export default class Section {
     this._container = document.querySelector(containerSelector);
   }
 
+  // Добавить карточку на страницу
   setItem(element) {
     this._container.prepend(element);
   }
 
+  // Создать карточку
   renderItems(data) {
     data.forEach((item) => {
       this._renderer(item);

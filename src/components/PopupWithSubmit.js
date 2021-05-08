@@ -9,6 +9,7 @@ export default class PopupWithSubmit extends Popup {
     this.btn = this._popupElement.querySelector(popupSaveSelector);
   }
 
+  // Слушатель
   setEventListeners(deleteCard, id) {
     super.setEventListeners();
     this.btn.addEventListener("click", () => {

@@ -9,6 +9,7 @@ export default class PopupWithImage extends Popup {
     super(popupSelector);
   }
 
+  // Открыть попап
   open(name, link) {
     this._popupElement.querySelector(popupImgSelector).src = link;
     this._popupElement.querySelector(popupImgSelector).alt = name;

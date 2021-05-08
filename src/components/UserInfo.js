@@ -10,6 +10,7 @@ export default class UserInfo {
     this._avatarElement = document.querySelector(avatarSelector);
   }
 
+  // Получить информацию о пользователе
   getUserInfo() {
     return {
       name: this._nameElement.textContent,
@@ -18,6 +19,7 @@ export default class UserInfo {
     };
   }
 
+  // Установить значения инпутов
   setInputFormValues() {
     document.querySelector(
       nameInputSelector
@@ -27,6 +29,7 @@ export default class UserInfo {
     ).value = this._aboutElement.textContent;
   }
 
+  // Установить "имя" и "о пользователе"
   _setUserDesc({ name, about }) {
     if (name && about) {
       this._nameElement.textContent = name;
@@ -34,12 +37,14 @@ export default class UserInfo {
     }
   }
 
+  // Установить аватар
   _setUserAvatar(avatar) {
     if (avatar) {
       this._avatarElement.src = avatar;
     }
   }
 
+  // Установить информацию о пользователе
   setUserInfo({ name, about, avatar }) {
     this._setUserDesc({ name, about });
     this._setUserAvatar(avatar);

@@ -6,6 +6,7 @@ export default class Api {
     this.getUserInfo = this.getUserInfo.bind(this);
   }
 
+  // Обработка ответа сервера
   _responseProcessing(res) {
     if (res.ok) {
       return res.json();
@@ -13,6 +14,7 @@ export default class Api {
     return Promise.reject(res.statusText);
   }
 
+  // Обновить фото пользователя
   updatePhoto(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
@@ -23,6 +25,7 @@ export default class Api {
     });
   }
 
+  // Запросить информацию о пользователе
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
@@ -32,6 +35,7 @@ export default class Api {
     });
   }
 
+  // Обновить информацию о пользователе
   editUserDesc(data) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
@@ -42,6 +46,7 @@ export default class Api {
     });
   }
 
+  // Обновить аватар
   editUserAvatar() {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
@@ -52,6 +57,7 @@ export default class Api {
     });
   }
 
+  // Запросить карточки 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: "GET",
@@ -61,6 +67,7 @@ export default class Api {
     });
   }
 
+  // Загрузить карточку на сервер
   addCard(data) {
     return fetch(`${this._url}/cards`, {
       method: "POST",
@@ -71,6 +78,7 @@ export default class Api {
     });
   }
 
+  // Удалить карточку
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
@@ -80,6 +88,7 @@ export default class Api {
     });
   }
 
+  // Поставить лайк
   putLike(cardId) {
     return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: "PUT",
@@ -89,6 +98,7 @@ export default class Api {
     });
   }
 
+  //  Удалить лайк
   removeLike(cardId) {
     return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: "DELETE",
