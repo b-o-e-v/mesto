@@ -20,110 +20,139 @@ const api = new Api({
   },
 });
 
-const cardList = new Section(
-  (card) => {
-    cardList.setItem(generateCard(card));
-  },
-  ".cards",
-  api,
-  generateCard
-);
-
 // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
-const user = new UserInfo(
-  {
-    nameSelector: ".profile__name",
-    aboutSelector: ".profile__description",
-    avatarSelector: ".profile__avatar",
-  },
-  api
-);
-user.setUserInfo();
-
-// СОЗДАТЬ КЛАССЫ ПОПАПОВ
-const popupImg = new PopupWithImage(".popup_type_open-photo");
-const popupDelete = new PopupWithSubmit(".popup_type_delete");
-const popupAdd = new PopupWithForm({
-  popupSelector: ".popup_type_add",
-  submit: (card) => {
-    cardList.saveItem(card, popupAdd.close);
-  },
+const user = new UserInfo({
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__description",
+  avatarSelector: ".profile__avatar",
 });
-const popupEdit = new PopupWithForm({
-  popupSelector: ".popup_type_edit",
-  submit: (InputValues) => {
-    api
-      .editUserDesc(InputValues)
-      .then(() => {
-        user
-          .setUserDesc()
-          .then(() => {
-            popupEdit.close();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-});
-const popupUpdate = new PopupWithForm({
-  popupSelector: ".popup_type_update",
-  submit: (InputValues) => {
-    api
-      .updatePhoto(InputValues)
-      .then(() => {
-        user
-          .setUserAvatar()
-          .then(() => {
-            popupUpdate.close();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-});
-
-// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
-function generateCard(card) {
-  const element = new Card(card, "#card", popupImg.open, popupDelete.open, api);
-  return element.generateCard();
-}
-
-// ФУНКЦИЯ ВАЛИДАЦИИ ПОЛЕЙ ФОРМ
-function enableValidation(formSelector) {
-  const validate = new FormValidator(initialValidate, formSelector);
-  validate.enableValidation();
-  return validate;
-}
-
-// ДОБАВИТЬ МАССИВ КАРТОЧЕК НА СТРАНИЦУ
 api
-  .getInitialCards()
-  .then((data) => {
-    cardList.renderItems(data.reverse());
+  .getUserInfo()
+  .then((res) => {
+    user.setUserInfo(res);
+    return res._id;
+  })
+  .then((id) => {
+    const cardList = new Section((card) => {
+      cardList.setItem(generateCard(card, id));
+    }, ".cards");
+
+    // ДОБАВИТЬ МАССИВ КАРТОЧЕК НА СТРАНИЦУ
+    api
+      .getInitialCards()
+      .then((data) => {
+        cardList.renderItems(data.reverse());
+      })
+      .then(() => {
+        const popupAddCard = new PopupWithForm(".popup_type_add", (card) => {
+          return api.addCard(card).then((card) => {
+            cardList.setItem(generateCard(card, id));
+          });
+        });
+        popupAddCard.setEventListeners();
+        profileAdd.addEventListener("click", () => {
+          addCardFormValidator.resetValidation();
+          addCardFormValidator.enableValidation();
+          popupAddCard.open();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   })
   .catch((err) => {
     console.log(err);
   });
 
+// СОЗДАТЬ КЛАССЫ ПОПАПОВ
+const popupImg = new PopupWithImage(".popup_type_open-photo");
+popupImg.setEventListeners();
+const popupDelete = new PopupWithSubmit(".popup_type_delete");
+const popupEditProfile = new PopupWithForm(
+  ".popup_type_edit",
+  (inputValues) => {
+    return api
+      .editUserDesc(inputValues)
+      .then(() => {
+        user.setUserInfo(inputValues);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
+popupEditProfile.setEventListeners();
+const popupEditAvatar = new PopupWithForm(
+  ".popup_type_update",
+  (inputValues) => {
+    return api
+      .updatePhoto(inputValues)
+      .then(() => {
+        user.setUserInfo(inputValues);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
+popupEditAvatar.setEventListeners();
+
+function heandlerPutLike(id) {
+  return api.putLike(id).catch((err) => {
+    console.log(err);
+  });
+}
+
+function heandlerRemoveLike(id) {
+  return api.removeLike(id).catch((err) => {
+    console.log(err);
+  });
+}
+
+function heandlerDeleteCard(id) {
+  return api.deleteCard(id).catch((err) => {
+    console.log(err);
+  });
+}
+
+// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function generateCard(card, id) {
+  const element = new Card(
+    card,
+    "#card",
+    popupImg.open,
+    popupDelete,
+    heandlerPutLike,
+    heandlerRemoveLike,
+    heandlerDeleteCard,
+    id
+  );
+  return element.generateCard();
+}
+
+const addCardFormValidator = new FormValidator(
+  initialValidate,
+  ".popup__form_type_add"
+);
+const editProfileFormValidator = new FormValidator(
+  initialValidate,
+  ".popup__form_type_edit"
+);
+const editAvatarFormValidator = new FormValidator(
+  initialValidate,
+  ".popup__form_type_update"
+);
+
 // СЛУШАТЕЛИ
-profileAdd.addEventListener("click", () => {
-  enableValidation(".popup__form_type_add").resetValidation();
-  popupAdd.setEventListeners();
-});
 profileEdit.addEventListener("click", () => {
-  enableValidation(".popup__form_type_edit").resetValidation();
-  user.getUserInfo();
-  popupEdit.setEventListeners();
+  editProfileFormValidator.resetValidation();
+  editProfileFormValidator.enableValidation();
+  const userData = user.getUserInfo();
+  user.setInputFormValues(userData);
+  popupEditProfile.open();
 });
 photoUpdate.addEventListener("click", () => {
-  enableValidation(".popup__form_type_update").resetValidation();
-  popupUpdate.setEventListeners();
+  editAvatarFormValidator.resetValidation();
+  editAvatarFormValidator.enableValidation();
+  popupEditAvatar.open();
 });

@@ -2,6 +2,15 @@ export default class Api {
   constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
+    this._responseProcessing = this._responseProcessing.bind(this);
+    this.getUserInfo = this.getUserInfo.bind(this);
+  }
+
+  _responseProcessing(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res.statusText);
   }
 
   updatePhoto(data) {
@@ -10,10 +19,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -22,10 +28,7 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -35,10 +38,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -48,10 +48,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -60,10 +57,7 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -73,19 +67,16 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
   deleteCard(cardId) {
-    fetch(`${this._url}/cards/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -94,10 +85,7 @@ export default class Api {
       method: "PUT",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 
@@ -106,10 +94,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.statusText);
+      return this._responseProcessing(res);
     });
   }
 }

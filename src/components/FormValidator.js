@@ -1,11 +1,16 @@
 export default class FormValidator {
-  constructor(data, formSelector) {
-    this._inputSelector = data.inputSelector;
-    this._submitButtonSelector = data.submitButtonSelector;
-    this._inactiveButtonClass = data.inactiveButtonClass;
-    this._inputErrorClass = data.inputErrorClass;
-    this._errorClass = data.errorClass;
+  constructor(validationConfig, formSelector) {
+    this._inputSelector = validationConfig.inputSelector;
+    this._submitButtonSelector = validationConfig.submitButtonSelector;
+    this._inactiveButtonClass = validationConfig.inactiveButtonClass;
+    this._inputErrorClass = validationConfig.inputErrorClass;
+    this._errorClass = validationConfig.errorClass;
     this._formSelector = formSelector;
+    this._form = document.querySelector(this._formSelector);
+    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
+    this._inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
   }
 
   _toggleButtonState() {
@@ -62,12 +67,6 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    this._form = document.querySelector(this._formSelector);
-    this._inputList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
-    );
-    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
-
     this._setEventListeners();
   }
 }
