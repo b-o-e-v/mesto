@@ -1,3 +1,8 @@
+import { 
+  nameInputSelector,
+  jobInputSelector
+} from "../utils/constants.js";
+
 export default class UserInfo {
   constructor({ nameSelector, aboutSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector);
@@ -15,10 +20,10 @@ export default class UserInfo {
 
   setInputFormValues() {
     document.querySelector(
-      ".popup__input_string_name"
+      nameInputSelector
     ).value = this._nameElement.textContent;
     document.querySelector(
-      ".popup__input_string_job"
+      jobInputSelector
     ).value = this._aboutElement.textContent;
   }
 

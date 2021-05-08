@@ -1,3 +1,9 @@
+import { 
+  popupOpenedSelector,
+  popupSelector,
+  popupCloseSelector
+} from "../utils/constants.js";
+
 export default class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
@@ -12,20 +18,20 @@ export default class Popup {
   }
 
   open() {
-    this._popupElement.classList.add("popup_opened");
+    this._popupElement.classList.add(popupOpenedSelector);
     document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
-    this._popupElement.classList.remove("popup_opened");
+    this._popupElement.classList.remove(popupOpenedSelector);
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
   setEventListeners() {
     this._popupElement.addEventListener("click", (evt) => {
       if (
-        evt.target.classList.contains("popup") ||
-        evt.target.classList.contains("popup__close")
+        evt.target.classList.contains(popupSelector) ||
+        evt.target.classList.contains(popupCloseSelector)
       ) {
         this.close();
       }

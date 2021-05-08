@@ -7,11 +7,29 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithSubmit from "../components/PopupWithSubmit.js";
 import UserInfo from "../components/UserInfo.js";
-import { profileAdd, profileEdit, photoUpdate } from "../utils/constants.js";
+import { 
+  profileAdd, 
+  profileEdit, 
+  photoUpdate, 
+  nameSelector, 
+  aboutSelector,
+  avatarSelector,
+  containerSelector,
+  popupImgOpenSelector,
+  popupDeleteSelector,
+  popupEditProfileSelector,
+  popupEditAvatarSelector,
+  popupAddCardSelector,
+  templateSelector,
+  addCardFormSelector,
+  editProfileFormSelector,
+  editAvatarFormSelector
+} from "../utils/constants.js";
 import { group, token } from "../utils/user.js";
 import "./index.css";
 import "../index.html";
 
+// Апи
 const api = new Api({
   url: `https://mesto.nomoreparties.co/v1/${group}`,
   headers: {
@@ -20,12 +38,9 @@ const api = new Api({
   },
 });
 
-// ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
-const user = new UserInfo({
-  nameSelector: ".profile__name",
-  aboutSelector: ".profile__description",
-  avatarSelector: ".profile__avatar",
-});
+// Создаем класс информации о пользователе
+const user = new UserInfo({ nameSelector, aboutSelector, avatarSelector });
+// Запрашиваем информацию о пользователе с сервера
 api
   .getUserInfo()
   .then((res) => {
@@ -35,21 +50,24 @@ api
   .then((id) => {
     const cardList = new Section((card) => {
       cardList.setItem(generateCard(card, id));
-    }, ".cards");
+    }, containerSelector);
 
-    // ДОБАВИТЬ МАССИВ КАРТОЧЕК НА СТРАНИЦУ
+    // Запрашиваем карточки с сервера
     api
       .getInitialCards()
       .then((data) => {
         cardList.renderItems(data.reverse());
       })
       .then(() => {
-        const popupAddCard = new PopupWithForm(".popup_type_add", (card) => {
+        // После того, как все карточки появились, создаем класс для новых
+        const popupAddCard = new PopupWithForm(popupAddCardSelector, (card) => {
           return api.addCard(card).then((card) => {
             cardList.setItem(generateCard(card, id));
           });
         });
         popupAddCard.setEventListeners();
+
+        // Слушатель добавления карточки
         profileAdd.addEventListener("click", () => {
           addCardFormValidator.resetValidation();
           addCardFormValidator.enableValidation();
@@ -64,12 +82,16 @@ api
     console.log(err);
   });
 
-// СОЗДАТЬ КЛАССЫ ПОПАПОВ
-const popupImg = new PopupWithImage(".popup_type_open-photo");
+// Создаем класс попапа с картинкой
+const popupImg = new PopupWithImage(popupImgOpenSelector);
 popupImg.setEventListeners();
-const popupDelete = new PopupWithSubmit(".popup_type_delete");
+
+// Создаем класс попапа удаления карточки
+const popupDelete = new PopupWithSubmit(popupDeleteSelector);
+
+// Создаем класс попапа редактирования профиля
 const popupEditProfile = new PopupWithForm(
-  ".popup_type_edit",
+  popupEditProfileSelector,
   (inputValues) => {
     return api
       .editUserDesc(inputValues)
@@ -82,8 +104,10 @@ const popupEditProfile = new PopupWithForm(
   }
 );
 popupEditProfile.setEventListeners();
+
+// Создаем класс попапа редактирования аватара
 const popupEditAvatar = new PopupWithForm(
-  ".popup_type_update",
+  popupEditAvatarSelector,
   (inputValues) => {
     return api
       .updatePhoto(inputValues)
@@ -97,29 +121,30 @@ const popupEditAvatar = new PopupWithForm(
 );
 popupEditAvatar.setEventListeners();
 
+// Хэндлер постановки лайка
 function heandlerPutLike(id) {
   return api.putLike(id).catch((err) => {
     console.log(err);
   });
 }
-
+// Хэндлер удаления лайка
 function heandlerRemoveLike(id) {
   return api.removeLike(id).catch((err) => {
     console.log(err);
   });
 }
-
+// Хэндлер удаления карточки
 function heandlerDeleteCard(id) {
   return api.deleteCard(id).catch((err) => {
     console.log(err);
   });
 }
 
-// ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+// Функция создания карточки
 function generateCard(card, id) {
   const element = new Card(
     card,
-    "#card",
+    templateSelector,
     popupImg.open,
     popupDelete,
     heandlerPutLike,
@@ -130,20 +155,14 @@ function generateCard(card, id) {
   return element.generateCard();
 }
 
-const addCardFormValidator = new FormValidator(
-  initialValidate,
-  ".popup__form_type_add"
-);
-const editProfileFormValidator = new FormValidator(
-  initialValidate,
-  ".popup__form_type_edit"
-);
-const editAvatarFormValidator = new FormValidator(
-  initialValidate,
-  ".popup__form_type_update"
-);
+// Включаем валидацию в форме добавления карточки
+const addCardFormValidator = new FormValidator(initialValidate, addCardFormSelector);
+// Включаем валидацию в форме редактирования профиля
+const editProfileFormValidator = new FormValidator(initialValidate, editProfileFormSelector);
+// Включаем валидацию в форме редактирования аватара
+const editAvatarFormValidator = new FormValidator(initialValidate, editAvatarFormSelector);
 
-// СЛУШАТЕЛИ
+// Слушатель редактирования профиля
 profileEdit.addEventListener("click", () => {
   editProfileFormValidator.resetValidation();
   editProfileFormValidator.enableValidation();
@@ -151,6 +170,8 @@ profileEdit.addEventListener("click", () => {
   user.setInputFormValues(userData);
   popupEditProfile.open();
 });
+
+// Слушатель редактирования аватара
 photoUpdate.addEventListener("click", () => {
   editAvatarFormValidator.resetValidation();
   editAvatarFormValidator.enableValidation();
