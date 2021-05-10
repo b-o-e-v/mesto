@@ -92,6 +92,7 @@ popupAddCard.setEventListeners();
 
 // Создаем класс попапа удаления карточки
 const popupDelete = new PopupWithSubmit(popupDeleteSelector);
+popupDelete.setEventListeners();
 
 // Создаем класс попапа редактирования профиля
 const popupEditProfile = new PopupWithForm(
@@ -157,17 +158,22 @@ function heandlerRemoveLike(id, like, likeCount) {
 }
 // Хэндлер удаления карточки
 function heandlerDeleteCard(id, card) {
-  api.deleteCard(id)
-    .then(() => {
-      card.remove();
-      popupDelete.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(false, popupDelete.btn);
-    })
+  popupDelete.open();
+  popupDelete.setSubmitAction(
+    () => {
+      api.deleteCard(id)
+        .then(() => {
+          card.remove();
+          popupDelete.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          renderLoading(false, popupDelete.btn);
+        })
+    }
+  )
 }
 
 // Функция создания карточки

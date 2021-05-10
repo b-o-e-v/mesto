@@ -27,7 +27,6 @@ export default class Card {
     this._likes = data.likes;
     this._templateSelector = templateSelector;
     this._openImg = openImg;
-    this._popupDelete = popupDelete;
     this._heandlerPutLike = heandlerPutLike;
     this._heandlerRemoveLike = heandlerRemoveLike;
     this._heandlerDeleteCard = heandlerDeleteCard;
@@ -62,8 +61,7 @@ export default class Card {
     }
 
     this._deleteDelete.addEventListener("click", () => {
-      this._popupDelete.open();
-      this._popupDelete.setEventListeners(this._heandlerDeleteCard, this._cardPhoto.id, this._element);
+      this._heandlerDeleteCard(this._cardPhoto.id, this._element);
     });
     this._cardPhoto.addEventListener("click", () => {
       this._openImg(this._name, this._link);

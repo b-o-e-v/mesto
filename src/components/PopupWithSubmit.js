@@ -10,12 +10,17 @@ export default class PopupWithSubmit extends Popup {
     this.btn = this._popupElement.querySelector(popupSaveSelector);
   }
 
+  // Установить внутренний метод
+  setSubmitAction(action) {
+    this._handleSubmitCallback = action;
+  }
+
   // Слушатель
-  setEventListeners(deleteCard, id, card) {
+  setEventListeners() {
     super.setEventListeners();
     this.btn.addEventListener("click", () => {
+      this._handleSubmitCallback();
       renderLoading(true, this.btn)
-      deleteCard(id, card);
     });
   }
 }
