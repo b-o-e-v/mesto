@@ -161,7 +161,7 @@ function heandlerDeleteCard(id, card) {
     .then(() => {
       card.remove();
       popupDelete.close();
-        })
+    })
     .catch((err) => {
       console.log(err);
     })
