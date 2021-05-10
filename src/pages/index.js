@@ -40,6 +40,7 @@ const api = new Api({
   },
 });
 
+// Контейнер для карточек
 const cardList = new Section((card, id) => {
   cardList.setItem(generateCard(card, id));
 }, containerSelector);
