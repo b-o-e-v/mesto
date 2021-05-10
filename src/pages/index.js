@@ -1,4 +1,5 @@
 import { initialValidate } from "../utils/initial-validate.js";
+import { renderLoading } from "../utils/utils.js";
 import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -22,6 +23,7 @@ import {
   popupAddCardSelector,
   templateSelector,
   addCardFormSelector,
+  likeActiveSelector,
   editProfileFormSelector,
   editAvatarFormSelector
 } from "../utils/constants.js";
@@ -38,6 +40,10 @@ const api = new Api({
   },
 });
 
+const cardList = new Section((card, id) => {
+  cardList.setItem(generateCard(card, id));
+}, containerSelector);
+
 // Создаем класс информации о пользователе
 const user = new UserInfo({ nameSelector, aboutSelector, avatarSelector });
 // Запрашиваем информацию о пользователе с сервера
@@ -48,31 +54,11 @@ api
     return res._id;
   })
   .then((id) => {
-    const cardList = new Section((card) => {
-      cardList.setItem(generateCard(card, id));
-    }, containerSelector);
-
     // Запрашиваем карточки с сервера
     api
       .getInitialCards()
       .then((data) => {
-        cardList.renderItems(data.reverse());
-      })
-      .then(() => {
-        // После того, как все карточки появились, создаем класс для новых
-        const popupAddCard = new PopupWithForm(popupAddCardSelector, (card) => {
-          return api.addCard(card).then((card) => {
-            cardList.setItem(generateCard(card, id));
-          });
-        });
-        popupAddCard.setEventListeners();
-
-        // Слушатель добавления карточки
-        profileAdd.addEventListener("click", () => {
-          addCardFormValidator.resetValidation();
-          addCardFormValidator.enableValidation();
-          popupAddCard.open();
-        });
+        cardList.renderItems(data.reverse(), id);
       })
       .catch((err) => {
         console.log(err);
@@ -86,6 +72,23 @@ api
 const popupImg = new PopupWithImage(popupImgOpenSelector);
 popupImg.setEventListeners();
 
+// Создаем класс попапа добавления карточки
+const popupAddCard = new PopupWithForm(popupAddCardSelector, (card) => {
+  api
+    .addCard(card)
+    .then((card) => {
+      cardList.setItem(generateCard(card));
+      popupAddCard.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(false, popupAddCard.btnSave);
+    })
+});
+popupAddCard.setEventListeners();
+
 // Создаем класс попапа удаления карточки
 const popupDelete = new PopupWithSubmit(popupDeleteSelector);
 
@@ -93,14 +96,18 @@ const popupDelete = new PopupWithSubmit(popupDeleteSelector);
 const popupEditProfile = new PopupWithForm(
   popupEditProfileSelector,
   (inputValues) => {
-    return api
+    api
       .editUserDesc(inputValues)
       .then(() => {
         user.setUserInfo(inputValues);
+        popupEditProfile.close();
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => {
+        renderLoading(false, popupEditProfile.btnSave);
+      })
   }
 );
 popupEditProfile.setEventListeners();
@@ -109,35 +116,57 @@ popupEditProfile.setEventListeners();
 const popupEditAvatar = new PopupWithForm(
   popupEditAvatarSelector,
   (inputValues) => {
-    return api
+    api
       .updatePhoto(inputValues)
       .then(() => {
         user.setUserInfo(inputValues);
+        popupEditAvatar.close();
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => {
+        renderLoading(false, popupEditAvatar.btnSave);
+      })
   }
 );
 popupEditAvatar.setEventListeners();
 
 // Хэндлер постановки лайка
-function heandlerPutLike(id) {
-  return api.putLike(id).catch((err) => {
-    console.log(err);
-  });
+function heandlerPutLike(id, like, likeCount) {
+  api.putLike(id)
+    .then((res) => {
+      like.classList.add(likeActiveSelector);
+      likeCount.textContent = res.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 // Хэндлер удаления лайка
-function heandlerRemoveLike(id) {
-  return api.removeLike(id).catch((err) => {
-    console.log(err);
-  });
+function heandlerRemoveLike(id, like, likeCount) {
+  api.removeLike(id)
+    .then((res) => {
+      like.classList.remove(likeActiveSelector);
+      likeCount.textContent = res.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 // Хэндлер удаления карточки
-function heandlerDeleteCard(id) {
-  return api.deleteCard(id).catch((err) => {
-    console.log(err);
-  });
+function heandlerDeleteCard(id, card) {
+  api.deleteCard(id)
+    .then(() => {
+      card.remove();
+      popupDelete.close();
+        })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(false, popupDelete.btn);
+    })
 }
 
 // Функция создания карточки
@@ -157,23 +186,30 @@ function generateCard(card, id) {
 
 // Включаем валидацию в форме добавления карточки
 const addCardFormValidator = new FormValidator(initialValidate, addCardFormSelector);
+addCardFormValidator.enableValidation();
 // Включаем валидацию в форме редактирования профиля
 const editProfileFormValidator = new FormValidator(initialValidate, editProfileFormSelector);
+editProfileFormValidator.enableValidation();
 // Включаем валидацию в форме редактирования аватара
 const editAvatarFormValidator = new FormValidator(initialValidate, editAvatarFormSelector);
+editAvatarFormValidator.enableValidation();
 
 // Слушатель редактирования профиля
 profileEdit.addEventListener("click", () => {
   editProfileFormValidator.resetValidation();
-  editProfileFormValidator.enableValidation();
   const userData = user.getUserInfo();
   user.setInputFormValues(userData);
   popupEditProfile.open();
 });
 
+// Слушатель добавления карточки
+profileAdd.addEventListener("click", () => {
+  addCardFormValidator.resetValidation();
+  popupAddCard.open();
+});
+
 // Слушатель редактирования аватара
 photoUpdate.addEventListener("click", () => {
   editAvatarFormValidator.resetValidation();
-  editAvatarFormValidator.enableValidation();
   popupEditAvatar.open();
 });

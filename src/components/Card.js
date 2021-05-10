@@ -28,11 +28,10 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._openImg = openImg;
     this._popupDelete = popupDelete;
-    this._deleteCard = this._deleteCard.bind(this);
     this._heandlerPutLike = heandlerPutLike;
     this._heandlerRemoveLike = heandlerRemoveLike;
     this._heandlerDeleteCard = heandlerDeleteCard;
-    this._userId = id;
+    this._userId = id || data.owner._id;
   }
 
   // Получить разметку карточки
@@ -42,54 +41,13 @@ export default class Card {
     return cardElement;
   }
 
-  // Поставить лайк
-  _putLike() {
-    this._heandlerPutLike(this._cardId)
-      .then((res) => {
-        console.log("Лайк поставлен");
-        this._like.classList.add(likeActiveSelector);
-        this._element.querySelector(likeCountSelector).textContent =
-          res.likes.length;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // Удалить лайк
-  _removeLike() {
-    this._heandlerRemoveLike(this._cardId)
-      .then((res) => {
-        console.log("Лайк удален");
-        this._like.classList.remove(likeActiveSelector);
-        this._element.querySelector(likeCountSelector).textContent =
-          res.likes.length;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   // Рабочий лайк
   _likeCard() {
     if (this._like.classList.contains(likeActiveSelector)) {
-      this._removeLike();
+      this._heandlerRemoveLike(this._cardId, this._like, this._likeCount)
     } else {
-      this._putLike();
+      this._heandlerPutLike(this._cardId, this._like, this._likeCount)
     }
-  }
-
-  // Удалить карточку
-  _deleteCard() {
-    this._heandlerDeleteCard(this._cardId)
-      .then((res) => {
-        console.log(res.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    this._element.remove();
-    this._popupDelete.close();
   }
 
   // Слушатель
@@ -105,7 +63,7 @@ export default class Card {
 
     this._deleteDelete.addEventListener("click", () => {
       this._popupDelete.open();
-      this._popupDelete.setEventListeners(this._deleteCard, this._cardPhoto.id);
+      this._popupDelete.setEventListeners(this._heandlerDeleteCard, this._cardPhoto.id, this._element);
     });
     this._cardPhoto.addEventListener("click", () => {
       this._openImg(this._name, this._link);
@@ -126,6 +84,7 @@ export default class Card {
     this._element = this._getTemplate();
     this._cardPhoto = this._element.querySelector(cardImgSelector);
     this._like = this._element.querySelector(cardLikeSelector);
+    this._likeCount = this._element.querySelector(likeCountSelector);
     this._setEventListeners();
 
     this._cardPhoto.src = this._link;

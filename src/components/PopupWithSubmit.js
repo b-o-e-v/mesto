@@ -1,4 +1,5 @@
 import Popup from "./Popup.js";
+import { renderLoading } from "../utils/utils.js";
 import { 
   popupSaveSelector
 } from "../utils/constants.js";
@@ -10,10 +11,11 @@ export default class PopupWithSubmit extends Popup {
   }
 
   // Слушатель
-  setEventListeners(deleteCard, id) {
+  setEventListeners(deleteCard, id, card) {
     super.setEventListeners();
     this.btn.addEventListener("click", () => {
-      deleteCard(id);
+      renderLoading(true, this.btn)
+      deleteCard(id, card);
     });
   }
 }

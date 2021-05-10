@@ -1,7 +1,17 @@
-export function renderLoading(form) {
-  if (form.classList.contains("popup__form_type_add")) {
-    form.querySelector(".popup__save").textContent = "Создать";
+export function renderLoading(bool, saveButton) {
+  if (bool) {
+    if (saveButton.name === "btn-delete-card") {
+      saveButton.textContent = "Удаление..."
+    } else {
+      saveButton.textContent = "Сохраниение..."
+    }
   } else {
-    form.querySelector(".popup__save").textContent = "Сохранить";
+    if (saveButton.name === "btn-delete-card") {
+      saveButton.textContent = "Да"
+    } else if (saveButton.name === "btn-add-profile") {
+      saveButton.textContent = "Cоздать"
+    } else {
+      saveButton.textContent = "Сохранить"
+    }
   }
 }

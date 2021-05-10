@@ -10,9 +10,9 @@ export default class Section {
   }
 
   // Создать карточку
-  renderItems(data) {
+  renderItems(data, id) {
     data.forEach((item) => {
-      this._renderer(item);
+      this._renderer(item, id);
     });
   }
 }

@@ -1,6 +1,6 @@
 import Popup from "./Popup.js";
 import { renderLoading } from "../utils/utils.js";
-import { 
+import {
   popupInputSelector,
   popupFormSelector,
   popupSaveSelector
@@ -16,6 +16,7 @@ export default class PopupWithForm extends Popup {
     this._handleSubmit = this._handleSubmit.bind(this);
     this.close = this.close.bind(this);
     this._submit = submit;
+    this.btnSave = this._form.querySelector(popupSaveSelector);
   }
 
   // Получить значения инпутов
@@ -30,10 +31,8 @@ export default class PopupWithForm extends Popup {
   // Отправить форму
   _handleSubmit(evt) {
     evt.preventDefault();
-    this._form.querySelector(popupSaveSelector).textContent = "Сохранение...";
-    this._submit(this._getInputValues()).then(() => {
-      this.close();
-    });
+    renderLoading(true, this.btnSave);
+    this._submit(this._getInputValues());
   }
 
   // Слушатель
@@ -46,6 +45,5 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close();
     this._form.reset();
-    renderLoading(this._form);
   }
 }
