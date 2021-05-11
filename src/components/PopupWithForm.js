@@ -1,5 +1,4 @@
 import Popup from "./Popup.js";
-import { renderLoading } from "../utils/utils.js";
 import {
   popupInputSelector,
   popupFormSelector,
@@ -31,7 +30,6 @@ export default class PopupWithForm extends Popup {
   // Отправить форму
   _handleSubmit(evt) {
     evt.preventDefault();
-    renderLoading(true, this.btnSave);
     this._submit(this._getInputValues());
   }
 

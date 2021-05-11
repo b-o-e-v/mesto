@@ -1,5 +1,4 @@
 import Popup from "./Popup.js";
-import { renderLoading } from "../utils/utils.js";
 import { 
   popupSaveSelector
 } from "../utils/constants.js";
@@ -20,7 +19,6 @@ export default class PopupWithSubmit extends Popup {
     super.setEventListeners();
     this.btn.addEventListener("click", () => {
       this._handleSubmitCallback();
-      renderLoading(true, this.btn)
     });
   }
 }

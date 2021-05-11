@@ -75,6 +75,7 @@ popupImg.setEventListeners();
 
 // Создаем класс попапа добавления карточки
 const popupAddCard = new PopupWithForm(popupAddCardSelector, (card) => {
+  renderLoading(true, popupAddCard.btnSave);
   api
     .addCard(card)
     .then((card) => {
@@ -98,6 +99,7 @@ popupDelete.setEventListeners();
 const popupEditProfile = new PopupWithForm(
   popupEditProfileSelector,
   (inputValues) => {
+    renderLoading(true, popupEditProfile.btnSave);
     api
       .editUserDesc(inputValues)
       .then(() => {
@@ -118,6 +120,7 @@ popupEditProfile.setEventListeners();
 const popupEditAvatar = new PopupWithForm(
   popupEditAvatarSelector,
   (inputValues) => {
+    renderLoading(true, popupEditAvatar.btnSave);
     api
       .updatePhoto(inputValues)
       .then(() => {
@@ -161,6 +164,7 @@ function heandlerDeleteCard(id, card) {
   popupDelete.open();
   popupDelete.setSubmitAction(
     () => {
+      renderLoading(true, popupDelete.btn);
       api.deleteCard(id)
         .then(() => {
           card.remove();
